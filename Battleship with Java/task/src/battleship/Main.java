@@ -21,9 +21,14 @@ public class Main {
                 {"I", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
                 {"J", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"}
         };
+        String[] coords =  new  String[5];
+        char rowLetterOne, rowLetterTwo;
 
+        int rowNumberOne, rowNumberTwo;
 
-        boardDisplay(board);
+        int colmOneNumber, colmTwoNumber;
+
+        //boardDisplay(board);
 
         board[1][1] = "O";
         board[1][2] = "O";
@@ -36,7 +41,15 @@ public class Main {
         board[6][6] = "O";
         board[6][7] = "O";
 
-        //boardDisplay(board);
+        board[7][10] = "O";
+        board[8][10] = "O";
+        board[9][10] = "O";
+        board[10][10] = "O";
+
+
+
+
+        boardDisplay(board);
 
 
         System.out.println("Enter the coordinates of the ship:");
@@ -48,7 +61,19 @@ public class Main {
                 continue;
             }
 
-            if ((userInput.charAt(0) != userInput.charAt(3))) {
+
+            coords =  userInput.split(" ");
+
+            rowLetterOne = coords[0].charAt(0);
+            rowLetterTwo = coords[1].charAt(0);
+
+            rowNumberOne = (rowLetterOne - 'A') + 1;
+            rowNumberTwo = (rowLetterTwo - 'A') + 1;
+
+            colmOneNumber = Integer.parseInt(coords[0].substring(1));
+            colmTwoNumber = Integer.parseInt(coords[1].substring(1));
+
+            if (colmOneNumber != colmTwoNumber) {
                 System.out.println("Error2: invalid coordinates");
                 continue;
             }
@@ -56,67 +81,59 @@ public class Main {
             break;
         }
 
-        String[] coords =  userInput.split(" ");
-        char rowLetter = coords[0].charAt(0);
 
-        int rowNumber = (rowLetter - 'A') + 1;
-
-        int colmOneNumber = Integer.parseInt(coords[0].substring(1));
-        int colmTwoNumber = Integer.parseInt(coords[1].substring(1));
 
         int length = 0;
-        if (colmOneNumber == 1) {
+
+        if (rowLetterOne == rowLetterTwo && colmOneNumber == 1) {
             length = colmTwoNumber;
         }
-        else if (colmTwoNumber == 1) {
+        else if (rowLetterOne == rowLetterTwo && colmTwoNumber == 1) {
             length = colmOneNumber;
         }
-        else if (colmOneNumber != 1 && colmOneNumber < colmTwoNumber) {
-          length = (colmTwoNumber - colmOneNumber) + 1;
+        else if (rowLetterOne == rowLetterTwo && colmOneNumber != 1 && colmOneNumber < colmTwoNumber) {
+            length = (colmTwoNumber - colmOneNumber) + 1;
         }
-        else if (colmTwoNumber != 1 && colmOneNumber > colmTwoNumber) {
+        else if (rowLetterOne == rowLetterTwo && colmTwoNumber != 1 && colmOneNumber > colmTwoNumber) {
             length = (colmOneNumber - colmTwoNumber) + 1;
+        }
+        else if (rowLetterOne != rowLetterTwo && rowNumberOne < rowNumberTwo) {
+            length = (rowNumberTwo - rowNumberOne) + 1;
+        }
+        else if (rowLetterOne != rowLetterTwo && rowNumberOne > rowNumberTwo) {
+            length = (rowNumberOne - rowNumberTwo) + 1;
         }
 
         System.out.println("Length: " + length);
         System.out.print("Parts: ");
-        if (colmOneNumber < colmTwoNumber) {
-            for  (int i = 0; i < 1; i++) {
-                for (int j = 0; j < colmTwoNumber + 1; j++) {
-                    if (board[rowNumber][colmOneNumber] == "O" && j >= colmOneNumber) {
-                        System.out.printf("%c%d ", rowLetter, j);
-                    }
+        if (rowLetterOne == rowLetterTwo && colmOneNumber < colmTwoNumber) {
+            for (int i = 0; i < board.length; i++) {
+                if (board[rowNumberOne][i].equals("O") && i <= colmTwoNumber) {
+                    System.out.printf("%c%d", rowLetterOne, i);
                 }
             }
         }
-        else {
-            for  (int i = 0; i < 1; i++) {
-                for (int j = colmOneNumber; j > 0; j--) {
-                    if (board[rowNumber][colmTwoNumber] == "O" && j >= colmTwoNumber) {
-                        System.out.printf("%c%d ", rowLetter, j);
-                    }
+        else if (rowLetterOne == rowLetterTwo && colmOneNumber > colmTwoNumber) {
+            for (int i = board.length - 1; i > 0; i--) {
+                if (board[rowNumberOne][i].equals("O") && i <= colmTwoNumber) {
+                    System.out.printf("%c%d", rowLetterOne, i);
                 }
             }
         }
-//        char rowLetter = 'F';
-//
-//        int rowNumber = (rowLetter - 'A') + 1;
-//
-//        int colmOneNumber = 3;
-//        int colmTwoNumber = 7;
-//
-//
-//
-//        for  (int i = 0; i < 1; i++) {
-//            for (int j = colmTwoNumber; j > 0; j--) {
-//                if (board[rowNumber][colmOneNumber] == "O" && j >= colmOneNumber) {
-//                    System.out.printf("%c%d ", rowLetter, j);
-//                }
-//            }
-//        }
-
-
-
+        else if (rowLetterOne != rowLetterTwo && rowNumberOne < rowNumberTwo) {
+            for (int i = 0; i < board.length; i++) {
+                if (board[i][colmOneNumber].equals("O")) {
+                    System.out.print(board[i][0] + colmOneNumber + " ");
+                }
+            }
+        }
+        else if (rowLetterOne != rowLetterTwo && rowNumberOne > rowNumberTwo) {
+            for (int i = board.length - 1; i > 0; i--) {
+                if (board[i][colmOneNumber].equals("O")) {
+                    System.out.print(board[i][0] + colmOneNumber + " ");
+                }
+            }
+        }
 
     }
 
