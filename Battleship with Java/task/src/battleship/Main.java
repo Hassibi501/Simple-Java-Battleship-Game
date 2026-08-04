@@ -42,30 +42,7 @@ public class Main {
         int colmTwoNumber = 0;
         int count = 5;
 
-        //boardDisplay(board);
-
-//        board[1][1] = "O";
-//        board[1][2] = "O";
-//        board[1][3] = "O";
-//        board[1][4] = "O";
-//
-//        board[6][3] = "O";
-//        board[6][4] = "O";
-//        board[6][5] = "O";
-//        board[6][6] = "O";
-//        board[6][7] = "O";
-//
-//        board[7][10] = "O";
-//        board[8][10] = "O";
-//        board[9][10] = "O";
-//        board[10][10] = "O";
-
-
-
-
         boardDisplay(board);
-
-
 
         for (String msg : placingShips) {
             System.out.println(msg + "\n");
@@ -73,128 +50,111 @@ public class Main {
             while (true) {
                 userInput = scanner.nextLine();
 
-            if (!userInput.matches("[A-J]([1-9]|10)\s[A-J]([1-9]|10)")) {
-                System.out.println("\nError! Wrong ship location! Try again:\n");
-                continue;
-            }
-
-            coords =  userInput.split(" ");
-
-            rowLetterOne = coords[0].charAt(0);
-            rowLetterTwo = coords[1].charAt(0);
-
-            rowNumberOne = (rowLetterOne - 'A') + 1;
-            rowNumberTwo = (rowLetterTwo - 'A') + 1;
-
-            colmOneNumber = Integer.parseInt(coords[0].substring(1));
-            colmTwoNumber = Integer.parseInt(coords[1].substring(1));
-            
-            int length = getLengthOfShips(coords);
-
-            if (rowLetterOne != rowLetterTwo && colmOneNumber != colmTwoNumber) {
-                System.out.println("\nError! Wrong ship location! Try again:\n");
-                continue;
-            }
-
-            if (board[rowNumberOne][colmOneNumber].equals("O")) {
-                System.out.println("\nError! Wrong ship location! Try again:\n");
-                continue;
-            }
-
-            if (board[rowNumberTwo][colmTwoNumber].equals("O")) {
-                System.out.println("\nError! You placed it too close to another one. Try again:\n");
-                continue;
-            }
-
-            if (adjacentChecker[rowNumberOne][colmOneNumber]) {
-                System.out.println("\nError! You placed it too close to another one. Try again:\n");
-                continue;
-            }
-
-            if (msg.contains("5") && length != 5) {
-                System.out.println("\nError! Wrong length of the Aircraft! Try again:\n");
-                continue;
-            }
-            else if (msg.contains("4") && length != 4) {
-                System.out.println("\nError! Wrong length of the Battleship! Try again:\n");
-                continue;
-            }
-            else if (msg.contains("Submarine") && msg.contains("3") && length != 3) {
-                System.out.println("\nError! Wrong length of the Submarine! Try again:\n");
-                continue;
-            }
-            else if (msg.contains("Cruiser") && msg.contains("3") && length != 3) {
-                System.out.println("\nError! Wrong length of the Cruiser! Try again:\n");
-                continue;
-            }
-            else if (msg.contains("2") && length != 2) {
-                System.out.println("\nError! Wrong length of the Destroyer! Try again:\n");
-                continue;
-            }
-
-            // A1 A4
-            if (rowLetterOne == rowLetterTwo && colmOneNumber < colmTwoNumber) {
-                for (int i = colmOneNumber; i <= colmTwoNumber; i++) {
-                    board[rowNumberOne][i] = "O";
-
-                    adjacentChecker[rowNumberOne][i - 1] = true;
-                    adjacentChecker[rowNumberOne + 1][i - 1] = true;
-                    adjacentChecker[rowNumberOne - 1][i - 1] = true;
+                if (!userInput.matches("[A-J]([1-9]|10)\s[A-J]([1-9]|10)")) {
+                    System.out.println("\nError! Wrong ship location! Try again:\n");
+                    continue;
                 }
-            }
-            // A4 A1
-            else if (rowLetterOne == rowLetterTwo && colmOneNumber > colmTwoNumber) {
-                for (int i = colmOneNumber; i >= colmTwoNumber ; i--) {
-                    board[rowNumberOne][i] = "O";
 
-                    adjacentChecker[rowNumberOne][i - 1] = true;
-                    adjacentChecker[rowNumberOne + 1][i - 1] = true;
-                    adjacentChecker[rowNumberOne - 1][i - 1] = true;
+                coords =  userInput.split(" ");
+
+                rowLetterOne = coords[0].charAt(0);
+                rowLetterTwo = coords[1].charAt(0);
+
+                rowNumberOne = (rowLetterOne - 'A') + 1;
+                rowNumberTwo = (rowLetterTwo - 'A') + 1;
+
+                colmOneNumber = Integer.parseInt(coords[0].substring(1));
+                colmTwoNumber = Integer.parseInt(coords[1].substring(1));
+
+                int length = getLengthOfShips(coords);
+
+                if (rowLetterOne != rowLetterTwo && colmOneNumber != colmTwoNumber) {
+                    System.out.println("\nError! Wrong ship location! Try again:\n");
+                    continue;
                 }
-            }
-            // A1 D1
-            else if (rowLetterOne != rowLetterTwo && rowNumberOne < rowNumberTwo) {
-                for (int i = rowNumberOne; i <= rowNumberTwo; i++) {
-                    board[i][colmOneNumber] = "O";
 
-                    adjacentChecker[i - 1][colmOneNumber] = true;
-                    adjacentChecker[i - 1][colmOneNumber + 1] = true;
-                    adjacentChecker[i - 1][colmOneNumber - 1] = true;
+                if (board[rowNumberOne][colmOneNumber].equals("O")) {
+                    System.out.println("\nError! Wrong ship location! Try again:\n");
+                    continue;
                 }
-            }
-            // D1 D3
-            else if (rowLetterOne != rowLetterTwo && rowNumberOne > rowNumberTwo) {
-                for (int i = rowNumberOne; i >= rowNumberTwo; i--) {
-                    board[i][colmOneNumber] = "O";
 
-                    adjacentChecker[i - 1][colmOneNumber] = true;
-                    adjacentChecker[i - 1][colmOneNumber + 1] = true;
-                    adjacentChecker[i - 1][colmOneNumber - 1] = true;
+                if (board[rowNumberTwo][colmTwoNumber].equals("O")) {
+                    System.out.println("\nError! You placed it too close to another one. Try again:\n");
+                    continue;
                 }
-            }
 
+                if (adjacentChecker[rowNumberOne][colmOneNumber]) {
+                    System.out.println("\nError! You placed it too close to another one. Try again:\n");
+                    continue;
+                }
 
+                if (msg.contains("5") && length != 5) {
+                    System.out.println("\nError! Wrong length of the Aircraft! Try again:\n");
+                    continue;
+                }
+                else if (msg.contains("4") && length != 4) {
+                    System.out.println("\nError! Wrong length of the Battleship! Try again:\n");
+                    continue;
+                }
+                else if (msg.contains("Submarine") && msg.contains("3") && length != 3) {
+                    System.out.println("\nError! Wrong length of the Submarine! Try again:\n");
+                    continue;
+                }
+                else if (msg.contains("Cruiser") && msg.contains("3") && length != 3) {
+                    System.out.println("\nError! Wrong length of the Cruiser! Try again:\n");
+                    continue;
+                }
+                else if (msg.contains("2") && length != 2) {
+                    System.out.println("\nError! Wrong length of the Destroyer! Try again:\n");
+                    continue;
+                }
+
+                // A1 A4
+                if (rowLetterOne == rowLetterTwo && colmOneNumber < colmTwoNumber) {
+                    for (int i = colmOneNumber; i <= colmTwoNumber; i++) {
+                        board[rowNumberOne][i] = "O";
+
+                        adjacentChecker[rowNumberOne][i - 1] = true;
+                        adjacentChecker[rowNumberOne + 1][i - 1] = true;
+                        adjacentChecker[rowNumberOne - 1][i - 1] = true;
+                    }
+                }
+                // A4 A1
+                else if (rowLetterOne == rowLetterTwo && colmOneNumber > colmTwoNumber) {
+                    for (int i = colmOneNumber; i >= colmTwoNumber ; i--) {
+                        board[rowNumberOne][i] = "O";
+
+                        adjacentChecker[rowNumberOne][i - 1] = true;
+                        adjacentChecker[rowNumberOne + 1][i - 1] = true;
+                        adjacentChecker[rowNumberOne - 1][i - 1] = true;
+                    }
+                }
+                // A1 D1
+                else if (rowLetterOne != rowLetterTwo && rowNumberOne < rowNumberTwo) {
+                    for (int i = rowNumberOne; i <= rowNumberTwo; i++) {
+                        board[i][colmOneNumber] = "O";
+
+                        adjacentChecker[i - 1][colmOneNumber] = true;
+                        adjacentChecker[i - 1][colmOneNumber + 1] = true;
+                        adjacentChecker[i - 1][colmOneNumber - 1] = true;
+                    }
+                }
+                // D1 D3
+                else if (rowLetterOne != rowLetterTwo && rowNumberOne > rowNumberTwo) {
+                    for (int i = rowNumberOne; i >= rowNumberTwo; i--) {
+                        board[i][colmOneNumber] = "O";
+
+                        adjacentChecker[i - 1][colmOneNumber] = true;
+                        adjacentChecker[i - 1][colmOneNumber + 1] = true;
+                        adjacentChecker[i - 1][colmOneNumber - 1] = true;
+                    }
+                }
 
                 boardDisplay(board);
 
                 break;
             }
         }
-
-
-        /*
-                F3 F4 F5 F6 F7
-
-
-                (6,3) (6,4) (6,5) (6,6) (6,7)
-
-         */
-
-
-
-
-
-
     }
 
     public static void boardDisplay(String[][] board) {
@@ -210,9 +170,7 @@ public class Main {
         System.out.println("\n");
     }
 
-
     public static int getLengthOfShips (String[] coords) {
-
         char rowLetterOne = coords[0].charAt(0);
         char rowLetterTwo = coords[1].charAt(0);
 
@@ -243,6 +201,4 @@ public class Main {
         }
         return length;
     }
-
-
 }
