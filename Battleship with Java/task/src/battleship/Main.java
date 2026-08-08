@@ -23,6 +23,20 @@ public class Main {
                 {"J", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"}
         };
 
+        String[][] fogBoard = {
+                {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+                {"A", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"B", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"C", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"D", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"E", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"F", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"G", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"H", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"I", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"},
+                {"J", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"}
+        };
+
         String[] placingShips = {
                 "Enter the coordinates of the Aircraft Carrier (5 cells):",
                 "Enter the coordinates of the Battleship (4 cells):",
@@ -32,14 +46,14 @@ public class Main {
         };
         boolean[][] adjacentChecker = new boolean[12][12];
 
-        String[] coords =  new  String[5];
-        char rowLetterOne = ' ', rowLetterTwo = ' ';
+        String[] coords;
+        char rowLetterOne, rowLetterTwo;
 
-        int rowNumberOne = 0;
-        int colmOneNumber = 0;
+        int rowNumberOne;
+        int colmOneNumber;
 
-        int rowNumberTwo = 0;
-        int colmTwoNumber = 0;
+        int rowNumberTwo;
+        int colmTwoNumber;
 
         boardDisplay(board);
 
@@ -158,7 +172,7 @@ public class Main {
         }// for each loop
 
         System.out.println("The game starts!");
-        boardDisplay(board);
+        boardDisplay(fogBoard);
         System.out.println("Take a shot!\n");
         while (true) {
             userInput = scanner.nextLine();
@@ -178,7 +192,8 @@ public class Main {
 
             if (board[rowNumberOne][colmOneNumber].equals("O")) {
                 board[rowNumberOne][colmOneNumber] = "X";
-                boardDisplay(board);
+                fogBoard[rowNumberOne][colmOneNumber] = "X";
+                boardDisplay(fogBoard);
                 System.out.println("You hit a ship!");
             }
             else if (board[rowNumberOne][colmOneNumber].equals("X")) {
@@ -187,11 +202,12 @@ public class Main {
             }
             else {
                 board[rowNumberOne][colmOneNumber] = "M";
-                boardDisplay(board);
+                fogBoard[rowNumberOne][colmOneNumber] = "M";
+                boardDisplay(fogBoard);
                 System.out.println("You missed!");
             }
 
-
+            boardDisplay(board);
             break;
 
         }
