@@ -12,6 +12,9 @@ buildscript {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
   }
 }
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
 
 static String sanitizeName(String name) {
   return name.replaceAll("[ /\\\\:<>\"?*|()]", "_").replaceAll("(^[.]+)|([.]+\$)", "")

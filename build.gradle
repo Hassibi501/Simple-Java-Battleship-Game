@@ -58,12 +58,12 @@ project(':util') {
     }
 }
 
-configure(subprojects.findAll {it.name != 'util'}) {
-    dependencies {
-        testImplementation project(':util').sourceSets.main.output
-        testImplementation project(':util').sourceSets.test.output
-    }
-}
+//configure(subprojects.findAll {it.name != 'util'}) {
+//    dependencies {
+//        testImplementation project(':util').sourceSets.main.output
+//        testImplementation project(':util').sourceSets.test.output
+//    }
+//}
 
 wrapper {
     gradleVersion = hs.gradle.version

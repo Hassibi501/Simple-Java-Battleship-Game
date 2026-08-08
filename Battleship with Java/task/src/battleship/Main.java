@@ -28,7 +28,7 @@ public class Main {
                 "Enter the coordinates of the Battleship (4 cells):",
                 "Enter the coordinates of the Submarine (3 cells):",
                 "Enter the coordinates of the Cruiser (3 cells):",
-                "Enter the coordinates of the Destroyer (2 cells):"
+                "Enter the coordinates of the Destroyer (2 cells):",
         };
         boolean[][] adjacentChecker = new boolean[12][12];
 
@@ -40,7 +40,6 @@ public class Main {
 
         int rowNumberTwo = 0;
         int colmTwoNumber = 0;
-        int count = 5;
 
         boardDisplay(board);
 
@@ -74,7 +73,7 @@ public class Main {
                 }
 
                 if (board[rowNumberOne][colmOneNumber].equals("O")) {
-                    System.out.println("\nError! Wrong ship location! Try again:\n");
+                    System.out.println("\nError! You placed it too close to another one. Try again:\n");
                     continue;
                 }
 
@@ -154,6 +153,47 @@ public class Main {
 
                 break;
             }
+
+
+        }// for each loop
+
+        System.out.println("The game starts!");
+        boardDisplay(board);
+        System.out.println("Take a shot!\n");
+        while (true) {
+            userInput = scanner.nextLine();
+
+            if (!userInput.matches("[A-J]([1-9]|10)")) {
+                System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
+                continue;
+            }
+
+            coords =  userInput.split(" ");
+
+            rowLetterOne = coords[0].charAt(0);
+
+            rowNumberOne = (rowLetterOne - 'A') + 1;
+
+            colmOneNumber = Integer.parseInt(coords[0].substring(1));
+
+            if (board[rowNumberOne][colmOneNumber].equals("O")) {
+                board[rowNumberOne][colmOneNumber] = "X";
+                boardDisplay(board);
+                System.out.println("You hit a ship!");
+            }
+            else if (board[rowNumberOne][colmOneNumber].equals("X")) {
+                System.out.println("\nError! You already shot here! Try again:\n");
+                continue;
+            }
+            else {
+                board[rowNumberOne][colmOneNumber] = "M";
+                boardDisplay(board);
+                System.out.println("You missed!");
+            }
+
+
+            break;
+
         }
     }
 
